@@ -1,5 +1,7 @@
 # Neovim Configuration
 
+**neovim version: 0.11.4**
+
 A modern, feature-rich Neovim IDE configuration with LSP, AI completion, and powerful plugins.
 
 ## ✨ Features
