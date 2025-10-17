@@ -1,0 +1,58 @@
+-- Optional: Lightweight colorscheme (rename to .lua to enable)
+-- If you want better colors, rename this file to colorscheme.lua
+
+return {
+  -- Option 1: Minimal dark theme (recommended)
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("tokyonight").setup({
+        style = "night",
+        light_style = "day",
+        transparent = false,
+        terminal_colors = true,
+        styles = {
+          comments = { italic = true },
+          keywords = { italic = false },
+          functions = {},
+          variables = {},
+        },
+        dim_inactive = false,
+        lualine_bold = false,
+      })
+      vim.cmd([[colorscheme tokyonight]])
+      
+      -- If you enable this, also set termguicolors = true in options.lua
+    end,
+  },
+  
+  -- Option 2: Classic gruvbox theme
+  -- {
+  --   "ellisonleao/gruvbox.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     require("gruvbox").setup({
+  --       contrast = "hard",
+  --     })
+  --     vim.cmd([[colorscheme gruvbox]])
+  --   end,
+  -- },
+  
+  -- Option 3: Modern catppuccin theme
+  -- {
+  --   "catppuccin/nvim",
+  --   name = "catppuccin",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     require("catppuccin").setup({
+  --       flavor = "mocha",
+  --     })
+  --     vim.cmd([[colorscheme catppuccin]])
+  --   end,
+  -- },
+}
+

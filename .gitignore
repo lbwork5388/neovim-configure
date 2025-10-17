@@ -1,0 +1,26 @@
+# Neovim .gitignore
+
+# Plugin manager data (will be auto-downloaded)
+lazy-lock.json
+
+# Runtime files
+*.log
+.nvimlog
+
+# Undo files
+*.un~
+
+# Backup files
+*~
+*.bak
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test files
+test.*
+*.test.*
+
