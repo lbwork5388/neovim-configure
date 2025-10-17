@@ -1,6 +1,6 @@
 # Version 1.0.0 - Initial Release
 
-**Release Date**: 2024
+**Release Date**: 2025-10-17
 
 ## 🎉 What's Included
 
