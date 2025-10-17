@@ -82,20 +82,24 @@ return {
     end,
   },
 
-  -- Indent guides (make code structure clearer)
+  -- Indent guides (DISABLED - too distracting)
   {
     "lukas-reineke/indent-blankline.nvim",
+    enabled = false,  -- Completely disabled
     main = "ibl",
     event = { "BufReadPost", "BufNewFile" },
     config = function()
       require("ibl").setup({
         indent = {
-          char = "│",
-          tab_char = "│",
+          char = "┊",           -- Thinner, more subtle character
+          tab_char = "┊",
+        },
+        whitespace = {
+          remove_blankline_trail = true,
         },
         scope = {
-          enabled = true,
-          show_start = true,
+          enabled = false,      -- Disable scope highlighting (less visual noise)
+          show_start = false,
           show_end = false,
         },
         exclude = {
@@ -105,9 +109,14 @@ return {
             "mason",
             "notify",
             "NvimTree",
+            "telescope",
           },
         },
       })
+      
+      -- Set a subtle gray color for indent lines
+      vim.api.nvim_set_hl(0, "IblIndent", { fg = "#3b4261", nocombine = true })
+      vim.api.nvim_set_hl(0, "IblWhitespace", { fg = "#3b4261", nocombine = true })
     end,
   },
 }
