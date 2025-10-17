@@ -25,6 +25,9 @@ A modern, feature-rich Neovim IDE configuration with LSP, AI completion, and pow
 # 1. Install dependencies (macOS)
 brew install node npm git ripgrep neovim
 
+# Nerd Font (if you want to use icons, required by which-key)
+brew install --cask font-jetbrains-mono-nerd-font
+
 # 2. Clone or copy this config
 git clone <your-repo> ~/.config/nvim
 # OR copy manually to ~/.config/nvim

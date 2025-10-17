@@ -14,12 +14,20 @@ return {
         preset = "modern",
         delay = 300,
         icons = {
-          mappings = true,
+          mappings = false, -- Disable all icons for clean look
+          separator = "→", -- Use arrow separator
         },
         win = {
           border = "rounded",
-          padding = { 1, 2 },
+          padding = { 2, 2 },
+          title = true,
+          title_pos = "center",
         },
+        layout = {
+          spacing = 3, -- Spacing between columns
+        },
+        show_help = false, -- Hide help message at bottom
+        show_keys = true,
       })
       
       -- Register key group descriptions using new API
@@ -33,6 +41,7 @@ return {
         { "<leader>r", group = "Rename" },
         { "<leader>c", group = "Code/Codeium" },
         { "<leader>d", group = "Diagnostic" },
+        { "<leader>x", group = "Trouble" },
       })
     end,
   },
