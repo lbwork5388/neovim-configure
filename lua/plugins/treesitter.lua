@@ -1,10 +1,10 @@
--- Treesitter: Syntax highlighting (disabled)
+-- Treesitter: Syntax highlighting
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    enabled = false, -- Disabled by default
+    enabled = true,
     build = ":TSUpdate",
-    lazy = true,
+    lazy = false,
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
     },
@@ -52,7 +52,7 @@ return {
             end
             return false
           end,
-          -- Additional vim regex highlighting (usually not needed)
+          -- Disable additional vim highlighting to avoid conflicts
           additional_vim_regex_highlighting = false,
         },
         
