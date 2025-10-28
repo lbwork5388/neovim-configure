@@ -8,7 +8,15 @@ return {
       vim.g.codeium_disable_bindings = 1
       
       -- Custom keymaps
-      vim.keymap.set('i', '<C-g>', function() return vim.fn['codeium#Accept']() end, { expr = true, silent = true, desc = "Accept Codeium suggestion" })
+      -- Tab: Accept Codeium suggestion (smart fallback to normal Tab)
+      vim.keymap.set('i', '<Tab>', function()
+        if vim.fn['codeium#Accept']() ~= '' then
+          return vim.fn['codeium#Accept']()
+        else
+          return '<Tab>'
+        end
+      end, { expr = true, silent = true, desc = "Accept Codeium or Tab" })
+      
       vim.keymap.set('i', '<C-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true, silent = true, desc = "Next Codeium suggestion" })
       vim.keymap.set('i', '<C-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true, desc = "Previous Codeium suggestion" })
       vim.keymap.set('i', '<C-x>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true, desc = "Clear Codeium suggestion" })
