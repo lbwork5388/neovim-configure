@@ -8,7 +8,7 @@ A modern, feature-rich Neovim IDE configuration with LSP, AI completion, and pow
 
 - 🔍 **Telescope** - Fuzzy finder for files and content
 - 🧠 **LSP** - Code intelligence (completion, diagnostics, jump to definition)
-- 🤖 **Codeium** - Free AI code completion
+- 🤖 **GitHub Copilot** - AI suggestions with separate completion shortcuts
 - 🔀 **Git Integration** - Real-time diff and git operations
 - ⚡ **Flash** - Lightning fast navigation (jump anywhere with 2 keystrokes)
 - 🔍 **Trouble** - Better diagnostics panel
@@ -34,10 +34,24 @@ git clone <your-repo> ~/.config/nvim
 
 # 3. Start Neovim (plugins auto-install)
 nvim
-
-# 4. Authenticate Codeium (first time only)
-:CodeiumAuth
 ```
+
+### Copilot Login
+
+Inside Neovim, run:
+
+```vim
+:Copilot auth signin
+```
+
+Keep the login popup open. Visit the URL shown in the popup, enter the one-time code, and authorize your GitHub account. Wait for the popup to close automatically, then check:
+
+```vim
+:Copilot auth info
+:Copilot status
+```
+
+Authentication should report `OK`. `Online` and `Buffer status: attached` only describe the plugin connection; they do not by themselves confirm a valid login. Your GitHub account needs access to Copilot. Sign in separately on each new machine; credentials are not included in this repository.
 
 ### First Steps
 
@@ -82,14 +96,32 @@ nvim myfile.py
 | Comment line | `gcc` | Toggle comment ⭐ |
 | Comment block | `gc` (visual) | Comment selection |
 
-### AI Completion (Codeium)
+### AI Completion (GitHub Copilot)
+
+Copilot suggestions appear automatically as gray text while typing in supported code files. The first three shortcuts below work in insert mode; the `Space` shortcuts work in normal mode.
 
 | Action | Keys | Description |
 |--------|------|-------------|
-| Accept suggestion | `Ctrl g` | Accept AI code ⭐ |
-| Next suggestion | `Ctrl ;` | Cycle suggestions |
-| Clear suggestion | `Ctrl x` | Dismiss suggestion |
-| Manual trigger | `Ctrl Space` | Force completion |
+| Accept suggestion | `Ctrl g` | Accept the full AI suggestion ⭐ |
+| Accept one line | `Ctrl l` | Accept the next line of the AI suggestion |
+| Dismiss suggestion | `Ctrl ]` | Hide the current AI suggestion |
+| Check status | `Space c s` | Run `:Copilot status` |
+| Enable Copilot | `Space c e` | Run `:Copilot enable` |
+| Disable Copilot | `Space c d` | Run `:Copilot disable` |
+
+### Standard Completion (nvim-cmp)
+
+LSP, buffer, path, and LuaSnip completion remain enabled. In insert mode:
+
+| Action | Keys | Description |
+|--------|------|-------------|
+| Next item / snippet jump | `Tab` | Select the next menu item; otherwise expand or jump through a snippet, or insert normal indentation |
+| Previous item / snippet jump | `Shift Tab` | Select the previous menu item or jump back in a snippet |
+| Trigger completion | `Ctrl Space` | Open the standard completion menu |
+| Confirm completion | `Enter` | Accept the selected item, or the first item when none is selected |
+| Close completion menu | `Ctrl e` | Cancel standard completion |
+
+Copilot does not bind `Tab` or `Ctrl Space`. AI suggestions are hidden while the standard completion menu is open, so the two completion systems do not compete for the same keys or display space.
 
 ### Git Operations
 
@@ -127,7 +159,7 @@ nvim myfile.py
 │   └── plugins/              # Plugin configs (10 files)
 │       ├── telescope.lua     # Fuzzy finder
 │       ├── lsp.lua           # LSP + completion
-│       ├── codeium.lua       # AI completion
+│       ├── copilot.lua       # AI completion
 │       ├── flash.lua         # Fast navigation
 │       ├── trouble.lua       # Diagnostics panel
 │       ├── git.lua           # Git integration
@@ -193,16 +225,16 @@ nvim
 ```python
 # Tip 1: Write comments, let AI generate code
 # function to calculate fibonacci numbers
-# → Codeium suggests full implementation
+# → Copilot suggests full implementation
 
 # Tip 2: Establish patterns
 user1 = User(name="Alice", age=25)
 user2 = User(name="Bob", age=30)
-# → Codeium suggests user3, user4...
+# → Copilot suggests user3, user4...
 
 # Tip 3: Function signatures
 def sort_list(items, reverse=False):
-    # → Codeium suggests complete implementation
+    # → Copilot suggests complete implementation
 ```
 
 ### Flash Navigation Example
@@ -243,11 +275,18 @@ Never memorize keybindings again!
 :Mason             " Verify servers installed
 ```
 
-### Codeium no suggestions?
+### Copilot has no suggestions or reports an expired session?
+
+Check the account and plugin status:
+
 ```vim
-:CodeiumAuth       " Re-authenticate
-:Codeium Status    " Check status
+:Copilot auth info
+:Copilot status
 ```
+
+If you are signed out or the session has expired, run `:Copilot auth signout`, wait for the sign-out message, then run `:Copilot auth signin` and complete the browser authorization. If an old error remains after successful authorization, save your files, restart Neovim, and check `:Copilot auth info` again.
+
+To enable suggestions, run `:Copilot enable`. Open a supported code file, enter insert mode, and type. Close the standard completion menu with `Ctrl e` if it is covering AI suggestions. Use `Ctrl g` to accept AI text; `Tab` belongs to standard completion and snippets.
 
 ### Telescope can't find files?
 ```bash
@@ -274,10 +313,9 @@ tar -xzf nvim-config.tar.gz -C ~/.config/
 
 # 3. Start Neovim (auto-install plugins)
 nvim
-
-# 4. Authenticate Codeium
-:CodeiumAuth
 ```
+
+In Neovim, run `:Copilot auth signin` and follow the [Copilot login steps](#copilot-login).
 
 ## 🎓 Learning Path
 
@@ -302,7 +340,7 @@ nvim
 - [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) - Fuzzy finder
 - [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) - LSP config
 - [mason.nvim](https://github.com/williamboman/mason.nvim) - LSP installer
-- [codeium.vim](https://github.com/Exafunction/codeium.vim) - AI completion
+- [copilot.lua](https://github.com/zbirenbaum/copilot.lua) - AI completion
 - [flash.nvim](https://github.com/folke/flash.nvim) - Navigation
 - [trouble.nvim](https://github.com/folke/trouble.nvim) - Diagnostics
 - [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) - Git integration
@@ -311,10 +349,12 @@ nvim
 
 ## 📝 Requirements
 
-- Neovim 0.9+
+- Neovim 0.11+ (this configuration uses the Neovim 0.11 LSP API)
 - Node.js (for LSP servers)
 - Git (for plugin management)
 - ripgrep (for Telescope search)
+- A GitHub account with Copilot access (for AI suggestions)
+- Internet access for plugin installation, Copilot sign-in, and AI suggestions
 
 ## 📄 License
 
